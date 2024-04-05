@@ -28,12 +28,10 @@ public class Routing {
             }
             //Find the best route       [Also check if there is no best route]
             List<Coord> bestRoute = BFS(board, endpoint);
-            if(bestRoute.isEmpty()) return null;
-
-            for(Coord coord : bestRoute){
-                System.out.print(coord + "-->");
+            if(bestRoute.isEmpty()) {
+                System.out.println("Returning null");
+                return null;
             }
-            System.out.println();
 
             //Place wires on the board
             Wire wire = new Wire(id, bestRoute);
