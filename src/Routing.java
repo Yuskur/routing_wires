@@ -13,16 +13,36 @@ public class Routing {
      */
     public static ArrayList<Wire>
     findPaths(Board board, ArrayList<Endpoints> goals) {
-        //Can try the shortest path algorithm along with checking for -1's and 0's
-        //pencil marks should be the adjacent paths
+        int id = 1;
+        ArrayList<Wire> wires = new ArrayList<>();
         for(Endpoints endpoint : goals){
+            //if endpoints are adjacent
+            if(endpoint.start.isAdjacent(endpoint.end)){
+                System.out.println("They are adjacent");
+                Wire wire = new Wire(id);
+                wire.add(endpoint.start);
+                wire.add(endpoint.end);
+                wires.add(wire);
+                id++;
+                continue;
+            }
             //Find the best route       [Also check if there is no best route]
             List<Coord> bestRoute = BFS(board, endpoint);
             if(bestRoute.isEmpty()) return null;
 
+            for(Coord coord : bestRoute){
+                System.out.print(coord + "-->");
+            }
+            System.out.println();
+
+            //Place wires on the board
+            Wire wire = new Wire(id, bestRoute);
+            wires.add(wire);
+            board.placeWire(wire);
+            id++;
         }
 
-        return null;
+        return wires;
     }
 
     public static class Relation<K, W>{
@@ -48,36 +68,70 @@ public class Routing {
         map.put(start, null);
         queue.add(relation);
 
+        System.out.println("Starting point: " + start);
+        System.out.println("Goal: " + end);
+
         while(!queue.isEmpty()){
             Relation<Coord, ArrayList<Coord>> list = queue.poll();
+            for(Coord c : list.list){
+                System.out.println("Adj Coord : " + c);
+            }
             //At most this loop will run 4 times
             for(Coord coord: list.list){
-                if(!board.isObstacle(coord) && !board.isOccupied(coord) && !visited.contains(coord)){
+                if((!board.isObstacle(coord) && !board.isOccupied(coord) && !visited.contains(coord)) || coord.equals(end)){
+                    System.out.println("Coord inside : " + coord);
                     visited.add(coord);
                     map.put(coord, list.parent);
                     //Check if we have reached the end or found what we needed
                     if(coord.equals(end)){
+                        System.out.println("Found!!!");
                         found = true;
                         break;
                     }
-                    else queue.add(new Relation<>(coord, board.adj(coord)));
+                    else {
+                        System.out.println("Adding adjacency: ");
+                        for(Coord c : board.adj(coord)){
+                            System.out.println("Adj Coord : " + c);
+                        }
+                        Relation<Coord, ArrayList<Coord>> rel = new Relation<>(coord, board.adj(coord));
+                        queue.add(rel);
+                    }
                 }
+                if(queue.isEmpty()) System.out.println("queue is empty");
+                else System.out.println("queue is not empty ------");
             }
             //found what we need
             if(found){
+                System.out.println("found");
                 break;
             }
+            if(queue.isEmpty()) System.out.println("queue is empty");
         }
+
+//        for(Coord coord : map.keySet()){
+//            System.out.println("Key: " + coord);
+//            System.out.println("Parent: " + map.get(coord));
+//        }
 
         ArrayList<Coord> route = new ArrayList<>();
         reconstruct(route, end, map);
         reverse(route);
+
+        if(map.isEmpty()) System.out.println("Map is empty");
+
+        for(Coord coord : route){
+            System.out.print(coord + "--->");
+        }
+        System.out.println();
         return route;
     }
 
     public static void reconstruct(ArrayList<Coord> route, Coord end, Map<Coord, Coord> map){
         Coord coord = end;
-        if(!map.containsKey(end)) return;
+        if(!map.containsKey(end)) {
+            System.out.println("Map does not contain the end");
+            return;
+        }
         while(true){
             if(map.get(coord) == null) {
                 route.add(coord);

@@ -87,10 +87,13 @@ public class Utilities {
 								   ArrayList<Wire> wires,
 								   Board board) {
 
+		System.out.println(board);
+
 		if (wires == null || wires.contains(null) || wires.size() != goals.size()) {
 		    System.out.println("failed to route all the wires");
 		    board.show();
         }
+		System.out.println("Wires Size: " + wires.size());
         assertTrue(wires.size() == goals.size());
 		assertFalse(wires.contains(null));
 
