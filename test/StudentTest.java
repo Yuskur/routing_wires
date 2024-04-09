@@ -17,4 +17,18 @@ public class StudentTest {
         });
     }
 
+    @Test
+    public void testWire2() {
+        assertTimeout(Duration.ofMillis(1000), () -> {
+            Utilities.test("./test/inputs/wire2.in");
+        });
+    }
+
+    @Test
+    public void testWire3() {
+        assertTimeout(Duration.ofMillis(1000), () -> {
+            Utilities.test("./test/inputs/wire3.in");
+        });
+    }
+
 }

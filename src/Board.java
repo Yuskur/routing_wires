@@ -69,6 +69,7 @@ public class Board {
             if (curr_value == -1) {
                 throw new ObstacleException(c);
             } else if (curr_value > 0 && curr_value != wire.id) {
+                show();
                 throw new WireWireException(c);
             }
         }
