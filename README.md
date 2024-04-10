@@ -22,11 +22,16 @@ Overall Time Complexity: O(n(V + E))
 ## Applying algorithm to interesting boards
 
 * [Case 1]
-  * |  0   0     1     0   0 |
-  * |  0   0  -1  -1   0 |
-  * |  2   0     0     2   0 |
-  * |  0   0     1     0   0 |
-  * |  0   0     3     0   3 |
+  * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/e4614fd3-0aaa-4d70-8255-83edc27e0d12)
+  
+  * In this case you can see that 1 has its fastest route to the left side.
+  * This path ultimately cuts the shortest and only path for 2 and so it should re-route 1 and route 2
+  * Removing and re-routing 1 gives us the second shortest path so we can be assured we are getting the second shortes path
+ 
+  * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/f8e92027-88a0-4207-b0eb-d80051b7e09e)
+
+* [Case 2]
+  * 
 
 
 
