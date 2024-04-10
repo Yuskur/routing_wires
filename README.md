@@ -21,11 +21,12 @@ Overall Time Complexity: O(n(V + E))
 
 ## Applying algorithm to interesting boards
 
-* |  0   0   1   0   0 |
-* |  0   0  -1   -1    0 |
-* |  2   0   0   2   0 |
-* |  0   0   1   0   0 |
-* |  0   0   3   0   3 |
+* [Case 1]
+  * |  0   0   1   0   0 |
+|  0   0  -1  -1   0 |
+|  2   0   0   2   0 |
+|  0   0   1   0   0 |
+|  0   0   3   0   3 |
 
 
 
