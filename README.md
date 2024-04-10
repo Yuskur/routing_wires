@@ -26,12 +26,15 @@ Overall Time Complexity: O(n(V + E))
   
   * In this case you can see that 1 has its fastest route to the left side.
   * This path ultimately cuts the shortest and only path for 2 and so it should re-route 1 and route 2
-  * Removing and re-routing 1 gives us the second shortest path so we can be assured we are getting the second shortes path
+  * Removing and re-routing 1 assures us that we are getting the second shortest path.
  
   * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/f8e92027-88a0-4207-b0eb-d80051b7e09e)
 
 * [Case 2]
-  * 
+  * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/6289a76f-b942-4a63-b11e-2aacdfe9bd38)
+ 
+  * In this case 
+
 
 
 
