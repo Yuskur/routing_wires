@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Routing {
@@ -14,12 +13,12 @@ public class Routing {
     findPaths(Board board, ArrayList<Endpoints> goals) {
         int id = 1;
         ArrayList<Wire> wires = new ArrayList<>();
-
-//Can get the starting coordinates through the wire id and get steps method
+        int[] occurrences = new int[goals.size()];
+        List<Coord> bestRoute;
+        ArrayList<Coord> visited = new ArrayList<>();
 
         for(Endpoints endpoint : goals){
             //if endpoints are adjacent
-            int[] occurrences = new int[id];
 
             if(endpoint.start.isAdjacent(endpoint.end)){
                 Wire wire = new Wire(id);
@@ -29,12 +28,8 @@ public class Routing {
                 id++;
                 continue;
             }
-            //Find the best route       [Also check if there is no best route]
 
-            /*
-            You could go through removing wires with the most occurrences that don't allow the current to work and then
-             */
-            List<Coord> bestRoute = BFS(board, endpoint, occurrences, id);
+            bestRoute = BFS(board, endpoint, occurrences, id, visited);
             Wire[] removedWires = new Wire[id];
             if(bestRoute.isEmpty()) {
 
@@ -46,13 +41,14 @@ public class Routing {
                     board.removeWire(wire);
                     removedWires[mostOccurrences] = wire;
                     resetOccurrences(occurrences, mostOccurrences);
-                    bestRoute = BFS(board, endpoint, occurrences, id);
+                    visited = new ArrayList<>();
+                    bestRoute = BFS(board, endpoint, occurrences, id, visited);
                 }
 
                 resetOccurrences(occurrences, -1);
-//                System.out.println("Starting: " + endpoint.start + " Ending: " + endpoint.end);
-//                System.out.println("Returning nothing");
-
+                //Clear the map
+                //Clear the visited coords
+                visited = new ArrayList<>();
             }
 
             //Place wires on the board
@@ -66,110 +62,78 @@ public class Routing {
                     wires.remove(w);
                     int ID = board.getValue(w.start());
                     Endpoints endpoints = new Endpoints(ID, w.start(), w.end());
-                    List<Coord> route = BFS(board, endpoints, occurrences, ID);
+                    List<Coord> route = BFS(board, endpoints, occurrences, ID, visited);
                     Wire newWire = new Wire(ID, route);
                     wires.add(newWire);
                     board.placeWire(newWire);
                 }
             }
 
-//            for(int i = 0; i < occurrences.length; i++){
-//                System.out.println(i + " : " + occurrences[i]);
-//            }
-//            for(int i = 0; i < pencilMarks.size(); i++){
-//                System.out.print(i + " : ");
-//                for(int j = 0; j < pencilMarks.get(i).size(); j++){
-//                    System.out.print(pencilMarks.get(i).get(j) + " ");
-//                }
-//                System.out.println();
-//            }
-
             //Reset the occurrences
             resetOccurrences(occurrences, -1);
         }
+
         return wires;
     }
 
+    static class Node<K>{
+        K coord;
+        Node<K> parent;
+
+        public Node(K coord, Node<K> parent){
+            this.coord = coord;
+            this.parent = parent;
+        }
+    }
+
     //Finding the shortest path including the start to the finish
-    public static List<Coord> BFS(Board board, Endpoints endpoints, int[] occurrences, int id){
-        Map<Coord, Coord> map = new HashMap<>();
-        ArrayList<Coord> visited = new ArrayList<>();
-        ArrayList<Coord> obstacleVisited = new ArrayList<>();
-        Queue<Coord> queue = new LinkedList<>();
-        boolean found = false;
+    public static List<Coord> BFS(Board board, Endpoints endpoints, int[] occurrences,
+                                  int id, ArrayList<Coord> visited){
+        Queue<Node<Coord>> queue = new LinkedList<>();
 
         Coord start = endpoints.start;
         Coord end = endpoints.end;
-        map.put(start, null);
-        queue.add(start);
+        Node<Coord> s = new Node<>(start, null);
+        queue.add(s);
 
-//        System.out.println("Starting point: " + start);
-//        System.out.println("Goal: " + end);
 
         while(!queue.isEmpty()){
-            Coord parent = queue.poll();
-            ArrayList<Coord> list = board.adj(parent);
+            Node<Coord> parent = queue.poll();
             //At most this loop will run 4 times
-            for(Coord coord: list){
+            for(Coord coord: board.adj(parent.coord)){
                 int value = board.getValue(coord); //find the id of the occupied coord
-                if(board.isOccupied(coord) && !board.isObstacle(coord) && !obstacleVisited.contains(coord)){
+                if(board.isOccupied(coord) && !board.isObstacle(coord) && !visited.contains(coord)){
                     if(value < id) {
                         occurrences[value - 1]++;
-                        obstacleVisited.add(coord);
+                        visited.add(coord);
                     }
                 }
                 if((!board.isObstacle(coord) && !board.isOccupied(coord) && !visited.contains(coord)) || coord.equals(end)){
-//                    System.out.println("Coord inside : " + coord);
-                    map.put(coord, parent);
+
                     visited.add(coord);
+                    Node<Coord> node = new Node<>(coord, parent);
                     //Check if we have reached the end or found what we needed
                     if(coord.equals(end)){
-//                        System.out.println("Found!!!");
-                        found = true;
-                        break;
+                        ArrayList<Coord> route = new ArrayList<>();
+                        reconstruct(route, node);
+                        reverse(route, 0, route.size() - 1);
+                        return route;
                     }
                     else {
-//                        System.out.println("Adding adjacency: ");
-//                        for(Coord c : board.adj(coord)){
-//                            System.out.println("Adj Coord : " + c);
-//                        }
-                        queue.add(coord);
+                        queue.add(node);
                     }
                 }
-//                if(queue.isEmpty()) System.out.println("queue is empty");
-//                else System.out.println("queue is not empty ------");
             }
-            //found what we need
-            if(found){
-//                System.out.println("FOUND!!!");
-                break;
-            }
-//            if(queue.isEmpty()) System.out.println("queue is empty");
         }
 
-//        for(Coord coord : map.keySet()){
-//            System.out.println("Key: " + coord);
-//            System.out.println("Parent: " + map.get(coord));
-//        }
-
-        ArrayList<Coord> route = new ArrayList<>();
-        reconstruct(route, end, map);
-        reverse(route, 0, route.size() - 1);
-
-        if(map.isEmpty()) System.out.println("Map is empty");
-
-//        for(Coord coord : route){
-//            System.out.print(coord + "--->");
-//        }
-        System.out.println();
-        return route;
+        return new ArrayList<>();
     }
 
-    public static void reconstruct(ArrayList<Coord> route, Coord end, Map<Coord, Coord> map){
-        Coord coord = end;
-        while (map.containsKey(coord)) {
-            route.add(coord);
-            coord = map.get(coord);
+    public static void reconstruct(ArrayList<Coord> route, Node<Coord> end){
+        Node<Coord> coord = end;
+        while (coord != null) {
+            route.add(coord.coord);
+            coord = coord.parent;
         }
     }
 
