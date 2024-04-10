@@ -21,11 +21,7 @@ Overall Time Complexity: O(n(V + E))
 
 ## Applying algorithm to interesting boards
 
-* |  0   0   1   1   1 |
-* |  0   0  -1  -1   1 |
-* |  2   2   2   2   1 |
-* |  0   0   1   1   1 |
-* |  0   0   3   3   3 |
+![image](https://github.com/Yuskur/routing_wires/assets/123311946/96d45ac8-12f6-4fad-84e2-289c51179ce9)
 
 
 Revision: Fall 2023
