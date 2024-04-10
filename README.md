@@ -20,8 +20,8 @@ Routing Wires Student Support Code
 Overall Time Complexity: O(n(V + E))
 
 ## Applying algorithm to interesting boards
+![image](https://github.com/Yuskur/routing_wires/assets/123311946/25a38817-55f2-4ebb-bff0-f9186a4630f5)
 
-![image](https://github.com/Yuskur/routing_wires/assets/123311946/96d45ac8-12f6-4fad-84e2-289c51179ce9)
 
 
 Revision: Fall 2023
