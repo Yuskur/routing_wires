@@ -13,6 +13,19 @@ Routing Wires Student Support Code
     * Once reconstructing the route we reverse the route to have the list going form starting coord to ending coord. - O(E)
   * If vertex is occupied, not an obstical and hasn't already been visited, we would then check if the occupied vertex value is smaller than the id of the goal. If so then it adds an occurrance - O(1)
 * Overall time complexity [BFS] : O(V + E)
-* Assuming that the bestRoute called by BFS comes out empty we could remove 
+* Assuming that the bestRoute called by BFS comes out empty we would remove the wire with the most occurrences and add it to the removed wires array and test the best route again. This will continue to loop until the bestRoute for the current wire is successful. - O(n(V + E))
+* Afterward place the best route on the board. - O(n)
+* The removed wires array will then be checked to see if any wires have been removed then re-route them. - O(n(V + E))
+
+Overall Time Complexity: O(n(V + E))
+
+## Applying algorithm to interesting boards
+
+|  0   0   1   1   1 |
+|  0   0  -1  -1   1 |
+|  2   2   2   2   1 |
+|  0   0   1   1   1 |
+|  0   0   3   3   3 |
+
 
 Revision: Fall 2023
