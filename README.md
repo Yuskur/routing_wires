@@ -1,6 +1,6 @@
 Routing Wires Student Support Code
 
-## Overview of the algorithm
+# Overview of the algorithm
 
 * The findPaths method takes in a board and a list of endpoints and is tasked in finding the optimal paths for every endpoint.
 * The list of endpoints is then iterated through and will be routed on the board wired through a wire object. - [O(n) time]
@@ -19,7 +19,7 @@ Routing Wires Student Support Code
 
 Overall Time Complexity: [O(n(V + E))]
 
-## Applying algorithm to interesting boards / finding and minimizing wire layouts evaluation
+# Applying algorithm to interesting boards / finding and minimizing wire layouts evaluation
 
 * [Case 1]
   * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/e4614fd3-0aaa-4d70-8255-83edc27e0d12)
@@ -42,12 +42,12 @@ Overall Time Complexity: [O(n(V + E))]
   * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/87e14513-9a0e-4c2d-8de6-cb7f6b9422f2)
 
 
-## Time complexity / Wall clock time
+# Time complexity / Wall clock time
 
 # Time complaxity
  * As I talked about in the algorithm overview the time complexity is O(n(V + E))
 
-# Wall Clock time
+### Wall Clock time
 
 * Small input size
   * Height: 10
