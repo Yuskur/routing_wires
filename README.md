@@ -46,9 +46,18 @@ Overall Time Complexity: [O(n(V + E))]
 
 # Time complaxity
  * As I talked about in the algorithm overview the time complexity is O(n(V + E))
-   * 
 
 # Wall Clock time
+
+* Small input size
+  * Height: 10
+  * Width: 10
+  * Wall-clock time: 5 milliseconds
+ 
+* Large input size
+  * Height: 500
+  * Width: 500
+  * Wall-clock time: 
 
 
 
