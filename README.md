@@ -33,7 +33,14 @@ Overall Time Complexity: O(n(V + E))
 * [Case 2]
   * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/6289a76f-b942-4a63-b11e-2aacdfe9bd38)
  
-  * In this case 
+  * In this case you can see that when each path will take its shortest path it will block off the path allowing 4 to reach its destination. This will ultimately lead to 4 removing 3 wires before reaching its destination if possible.
+  * 1 will be the first to re-route taking its second shortest available path clearing a way for route 4.
+  * 2 will then follow to re-route taking its second shortest available path clearing a way for route 4.
+  * afterwards 3 will follow to re-route taking its second shortest available path clearing a way for route 4.
+  * As a result the shortest available path for 4 is taken while also using the second best routes for routes that cleared the way for route 4.
+
+  *![image](https://github.com/Yuskur/routing_wires/assets/123311946/d5aad81f-64b6-4c33-a945-15cbd88c974a)
+
 
 
 
