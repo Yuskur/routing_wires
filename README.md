@@ -39,7 +39,8 @@ Overall Time Complexity: O(n(V + E))
   * afterwards 3 will follow to re-route taking its second shortest available path clearing a way for route 4.
   * As a result the shortest available path for 4 is taken while also using the second best routes for routes that cleared the way for route 4.
 
-  *![image](https://github.com/Yuskur/routing_wires/assets/123311946/d5aad81f-64b6-4c33-a945-15cbd88c974a)
+  * ![image](https://github.com/Yuskur/routing_wires/assets/123311946/87e14513-9a0e-4c2d-8de6-cb7f6b9422f2)
+
 
 
 
