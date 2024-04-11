@@ -52,12 +52,12 @@ Overall Time Complexity: [O(n(V + E))]
 * Small input size
   * Height: 10
   * Width: 10
-  * Wall-clock time: 5 milliseconds
+  * Wall-clock time: 3 milliseconds
  
 * Large input size
-  * Height: 500
-  * Width: 500
-  * Wall-clock time: 
+  * Height: 100
+  * Width: 100
+  * Wall-clock time: 3782 milliseconds
 
 
 
