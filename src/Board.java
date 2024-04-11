@@ -69,7 +69,6 @@ public class Board {
             if (curr_value == -1) {
                 throw new ObstacleException(c);
             } else if (curr_value > 0 && curr_value != wire.id) {
-                show();
                 throw new WireWireException(c);
             }
         }
@@ -86,7 +85,7 @@ public class Board {
     public void removeWire(Wire wire) {
         for (Coord c: wire.getPoints()) {
             if (this.getValue(c) == wire.id
-                && c != wire.start() && c != wire.end()) {
+                    && c != wire.start() && c != wire.end()) {
                 this.unset(c);
             }
         }
@@ -160,9 +159,9 @@ public class Board {
             }
             result += " |\n";
         }
-	return result;
+        return result;
     }
-    
+
     public class ObstacleException extends RuntimeException {
         public ObstacleException(Coord loc) {
             super("Unable to overwrite obstacle at coordinate (" + loc.row + ", " + loc.column + ")");
@@ -181,4 +180,3 @@ public class Board {
         }
     }
 }
-

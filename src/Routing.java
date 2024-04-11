@@ -11,6 +11,7 @@ public class Routing {
      */
     public static ArrayList<Wire>
     findPaths(Board board, ArrayList<Endpoints> goals) {
+        System.out.println("Finding");
         int id = 1;
         ArrayList<Wire> wires = new ArrayList<>();
         int[] occurrences = new int[goals.size()];
@@ -34,9 +35,8 @@ public class Routing {
             if(bestRoute.isEmpty()) {
 
                 //While its empty
-                while(bestRoute.isEmpty()){
+                for(int i = 0; i < id; i++){
                     int mostOccurrences = findMax(occurrences);
-                    if(mostOccurrences + 1 > id) return null;
                     Wire wire = wires.get(mostOccurrences);
                     board.removeWire(wire);
                     removedWires[mostOccurrences] = wire;
@@ -45,8 +45,8 @@ public class Routing {
                     bestRoute = BFS(board, endpoint, occurrences, id, visited);
                 }
 
+                if(bestRoute.isEmpty()) return null;
                 resetOccurrences(occurrences, -1);
-                //Clear the map
                 //Clear the visited coords
                 visited = new ArrayList<>();
             }
@@ -66,11 +66,14 @@ public class Routing {
                     Wire newWire = new Wire(ID, route);
                     wires.add(newWire);
                     board.placeWire(newWire);
+                    visited = new ArrayList<>();
                 }
             }
 
             //Reset the occurrences
             resetOccurrences(occurrences, -1);
+            //Clear the visited coords
+            visited = new ArrayList<>();
         }
 
         return wires;

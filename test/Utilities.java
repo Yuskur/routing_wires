@@ -10,8 +10,8 @@ import static org.junit.Assert.assertTrue;
 public class Utilities {
 
 	public static Board buildBoard(ArrayList<Endpoints> goals,
-				       ArrayList<Integer[]> obstacles,
-				       String filename) throws BoardConstructionException {
+								   ArrayList<Integer[]> obstacles,
+								   String filename) throws BoardConstructionException {
 		try {
 			final FileReader     reader         = new FileReader(filename);
 			final BufferedReader bufferedReader = new BufferedReader(reader);
@@ -25,9 +25,9 @@ public class Utilities {
 				String line       = bufferedReader.readLine();
 				String nums_str[] = line.split(" ");
 				Integer corners[] = {Integer.parseInt(nums_str[0]),
-						     Integer.parseInt(nums_str[1]),
-						     Integer.parseInt(nums_str[2]),
-						     Integer.parseInt(nums_str[3])};
+						Integer.parseInt(nums_str[1]),
+						Integer.parseInt(nums_str[2]),
+						Integer.parseInt(nums_str[3])};
 				obstacles.add(corners);
 			}
 
@@ -43,8 +43,8 @@ public class Utilities {
 				int    destY   = Integer.parseInt(nums[3]);
 
 				Endpoints eps = new Endpoints(path_id,
-											  new Coord(originX, originY),
-											  new Coord(destX, destY));
+						new Coord(originX, originY),
+						new Coord(destX, destY));
 
 				goals.add(eps);
 			}
@@ -87,14 +87,11 @@ public class Utilities {
 								   ArrayList<Wire> wires,
 								   Board board) {
 
-		System.out.println(board);
-
 		if (wires == null || wires.contains(null) || wires.size() != goals.size()) {
-		    System.out.println("failed to route all the wires");
-		    board.show();
-        }
-		System.out.println("Wires Size: " + wires.size());
-        assertTrue(wires.size() == goals.size());
+			System.out.println("failed to route all the wires");
+			board.show();
+		}
+		assertTrue(wires.size() == goals.size());
 		assertFalse(wires.contains(null));
 
 		int[]     checked = new int[goals.size()];
@@ -130,8 +127,8 @@ public class Utilities {
 	}
 
 	private static boolean validPath(Wire wire,
-	                                 Endpoints eps,
-	                                 Board board) {
+									 Endpoints eps,
+									 Board board) {
 
 		if (wire.length() == 0) {
 			System.out.println("Empty wire for goal " + wire.id);
@@ -139,14 +136,14 @@ public class Utilities {
 
 		} else if (!wire.start().equals(eps.start)) {
 			System.out.println("Incorrect start of wire " + wire.id + ":\n" +
-			                   "\tExpected: " + eps.start + "\n" +
-			                   "\tGot:      " + wire.start());
+					"\tExpected: " + eps.start + "\n" +
+					"\tGot:      " + wire.start());
 			return false;
 
 		} else if (!wire.end().equals(eps.end)) {
 			System.out.println("Incorrect end of wire " + wire.id + ":\n" +
-			                   "\tExpected: " + eps.start + "\n" +
-			                   "\tGot:      " + wire.start());
+					"\tExpected: " + eps.start + "\n" +
+					"\tGot:      " + wire.start());
 			return false;
 		}
 
@@ -156,8 +153,8 @@ public class Utilities {
 			Integer board_val = board.getValue(path_component);
 			if (board_val != wire.id) {
 				System.out.println("Incorrect wire label at " + path_component.row + ", " + path_component.column + ":\n" +
-				                   "\tExpected: " + wire.id + "\n" +
-				                   "\tGot:      " + board_val);
+						"\tExpected: " + wire.id + "\n" +
+						"\tGot:      " + board_val);
 				return false;
 			} else if (step_id != wire.length() - 1) {
 				Coord next_path_component = wire.get(step_id + 1);
